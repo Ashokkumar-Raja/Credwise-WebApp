@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User Authentication App</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div id="login-form">
+                <h2 class="mb-4 text-center">Login</h2>
+                <form id="login" onsubmit="return loginUser()">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p class="mt-3">Don't have an account? <a href="#" onclick="showRegistrationForm()">Create one</a></p>
+            </div>
+
+            <div id="registration-form" style="display: none;">
+                <h2 class="mb-4 text-center">Create Account</h2>
+                <form id="register" onsubmit="return registerUser()">
+                    <div class="form-group">
+                        <label for="newUsername">Username</label>
+                        <input type="text" class="form-control" id="newUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Account</button>
+                </form>
+                <p class="mt-3">Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+            </div>
+
+            <div id="profile" style="display: none;">
+                <h2>Welcome, <span id="loggedInUser"></span>!</h2>
+                <h3>Profile Settings</h3>
+                <form id="updateProfile" onsubmit="return updateProfile()">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" class="form-control" id="phoneNumber" required>
+                    </div>
+                    <button type="submit" class="btn btn-info">Update Profile</button>
+                </form>
+                <p class="mt-3"><a href="#" onclick="logout()">Logout</a></p>
+            </div>
+
+            <div id="registration-success-message" class="alert alert-success" style="display: none;"></div>
+            <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+            <div id="success-message" class="alert alert-success" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Second container (to be displayed on the profile settings page only) -->
+<div class="container" id="profile-container" style="display: none;">
+    <div class="row mb-4">
+        <div class="col-sm-4">
+          <!-- Content for the first cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 1</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the second cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 2</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the third cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 3</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-sm-4">
+          <!-- Content for the fourth cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 4</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the fifth cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 5</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the sixth cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 6</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-sm-4">
+          <!-- Content for the seventh cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 7</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the eighth cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 8</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- Content for the ninth cell -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cell 9</h5>
+              <p class="card-text">Content goes here.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    let users = []; // Store user data
+    let loggedInUser = null;
+
+    function showRegistrationForm() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('registration-form').style.display = 'block';
+        
+        // Hide success messages when switching to registration form
+        document.getElementById('success-message').style.display = 'none';
+        document.getElementById('registration-success-message').style.display = 'none';
+    }
+    
+    function showLoginForm() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('registration-form').style.display = 'none';
+        
+        // Hide success messages when switching to login form
+        document.getElementById('success-message').style.display = 'none';
+        document.getElementById('registration-success-message').style.display = 'none';
+    }
+    
+
+    function loginUser() {
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+
+        let user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            loggedInUser = user;
+            document.getElementById('loggedInUser').innerText = loggedInUser.username;
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('profile').style.display = 'block';
+            document.getElementById('profile-container').style.display = 'block'; // Show the profile container
+            return false;
+        } else {
+            document.getElementById('error-message').innerText = 'Invalid credentials. Please try again.';
+            document.getElementById('error-message').style.display = 'block';
+            return false;
+        }
+    }
+
+    function registerUser() {
+        let newUsername = document.getElementById('newUsername').value;
+        let newPassword = document.getElementById('newPassword').value;
+    
+        // Check if the username is already taken
+        if (users.some(u => u.username === newUsername)) {
+            document.getElementById('error-message').innerText = 'Username already exists. Please choose another.';
+            document.getElementById('error-message').style.display = 'block';
+            return false;
+        }
+    
+        // Create a new user
+        let newUser = { username: newUsername, password: newPassword };
+        users.push(newUser);
+    
+        // Display success message on the registration form
+        document.getElementById('registration-success-message').innerText = 'Account created successfully. Please log in.';
+        document.getElementById('registration-success-message').style.display = 'block';
+    
+        // Hide other messages
+        document.getElementById('error-message').style.display = 'none';
+        document.getElementById('success-message').style.display = 'none';
+    
+        // Switch to login form
+        showLoginForm();
+    
+        return false;
+    }        
+
+    function updateProfile() {
+        let fullName = document.getElementById('fullName').value;
+        let email = document.getElementById('email').value;
+        let phoneNumber = document.getElementById('phoneNumber').value;
+
+        // Update user profile
+        loggedInUser.fullName = fullName;
+        loggedInUser.email = email;
+        loggedInUser.phoneNumber = phoneNumber;
+
+        document.getElementById('success-message').innerText = 'Profile updated successfully.';
+        document.getElementById('success-message').style.display = 'block';
+
+        return false;
+    }
+
+    function logout() {
+        loggedInUser = null;
+        document.getElementById('profile').style.display = 'none';
+        document.getElementById('profile-container').style.display = 'none'; // Hide the profile container
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+    }
+</script>
+
+</body>
+</html>
